@@ -5,6 +5,8 @@ import org.apache.log4j.PropertyConfigurator;
 import java.sql.SQLException;
 import static util.enums.Log4jValues.LOG4J_PROPERTIES_FILE_PATH;
 import static util.enums.SystemProperties.USER_DIR;
+
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -25,10 +27,10 @@ public class Main {
     private static final String SELECT_ALL_FROM_EMPLEADO_BUCARAMANGA= String.format("SELECT * FROM empleadosBucaramagaView", DATA_BASE_NAME);
     private static final String SELECT_ALL_FROM_EMPLEADO_BELLO = String.format("SELECT * FROM empleadosBelloView", DATA_BASE_NAME);
     private static final String CALL_SP_INSERTAR_PROPIETARIO = String.format("CALL sp_insertarPropietario(1030656516,1,'Harold','Yesid','Calderon','Vega','cll','4','A','51',null,'harold.1408@hotmail.com','9000940','1995-08-14')", DATA_BASE_NAME);
-    private static final String CALL_SP_Borrar_PROPIETARIO = String.format("CALL sp_eliminarPropietario()", DATA_BASE_NAME);
+    private static final String CALL_SP_Borrar_PROPIETARIO = String.format("CALL sp_eliminarPropietario(1030656516)", DATA_BASE_NAME);
     private static final String CALL_SP_PROPIETARIOS = String.format("CALL sp_propietarios()", DATA_BASE_NAME);
     private static final String CALL_SP_CONSULTAR_REVISIONES = String.format("CALL sp_colsultarRevisiones()", DATA_BASE_NAME);
-    private static final String CALL_SP_ACTUALIZAR_HORA = String.format("sp_actualizarHoraRevision(3,'7:00:00')", DATA_BASE_NAME);
+    private static final String CALL_SP_ACTUALIZAR_HORA = String.format("CALL sp_actualizarHoraRevision(3,'11:00:00')", DATA_BASE_NAME);
 
 
     /*private static final String SELECT_ALL_FROM_CIUDAD = String.format("select * from %s.ciudad", DATA_BASE_NAME);
@@ -139,6 +141,7 @@ public class Main {
                 login();
                 call_sp_actualizarHora();
                 logout();
+                System.out.println("Actualizada");
                 System.out.println("*********************************************");
             }else if (entrada.equals("7")) {
                 break;
@@ -211,12 +214,10 @@ public class Main {
     private static void call_sp_insertarPropietario() throws SQLException {
         mySqlOperations.setSqlStatement(CALL_SP_INSERTAR_PROPIETARIO);
         mySqlOperations.executeSqlStatement();
-        mySqlOperations.printResultSet();
     }
     private static void call_sp_borrarPropietario() throws SQLException {
         mySqlOperations.setSqlStatement(CALL_SP_Borrar_PROPIETARIO);
         mySqlOperations.executeSqlStatement();
-        mySqlOperations.printResultSet();
     }
     private static void call_sp_listarPropietario() throws SQLException {
         mySqlOperations.setSqlStatement(CALL_SP_PROPIETARIOS);
@@ -231,8 +232,6 @@ public class Main {
     private static void call_sp_actualizarHora() throws SQLException {
         mySqlOperations.setSqlStatement(CALL_SP_ACTUALIZAR_HORA);
         mySqlOperations.executeSqlStatement();
-        //mySqlOperations.printResultSet();
     }
-
 
 }
